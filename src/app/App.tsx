@@ -568,35 +568,14 @@ function ShopView({ setView, setSelectedProduct, products, onQuickAdd }: {
   setView: (v: View) => void; setSelectedProduct: (p: Product) => void;
   products: Product[]; onQuickAdd: (p: Product) => void;
 }) {
-  const [activeFilter, setActiveFilter] = useState("All");
-  const filterNames = ["All", ...Array.from(new Set(products.map((p) => {
-    return COLLECTIONS.find((c) => c.id === p.collectionId)?.name ?? p.collectionId;
-  })))];
-  const filtered = activeFilter === "All" ? products :
-    products.filter((p) => COLLECTIONS.find((c) => c.id === p.collectionId)?.name === activeFilter);
-
   return (
     <div className="max-w-[1400px] mx-auto px-8 pt-32 pb-24">
-      <div className="mb-12 flex flex-col md:flex-row md:items-end justify-between gap-6">
-        <div>
-          <p className="font-['Inter'] text-xs tracking-[0.3em] uppercase text-[#e8e4de]/25 mb-2">Browse</p>
-          <h1 className="font-['Playfair_Display'] text-4xl font-medium text-[#e8e4de]">All Products</h1>
-        </div>
-        <div className="flex gap-2 flex-wrap">
-          {filterNames.map((f) => (
-            <button key={f} onClick={() => setActiveFilter(f)}
-              className={`font-['Inter'] text-[11px] tracking-widest uppercase px-4 py-2 border transition-colors ${
-                activeFilter === f
-                  ? "bg-[#e8e4de] text-[#0e0e0e] border-[#e8e4de]"
-                  : "border-white/10 text-[#e8e4de]/40 hover:border-white/30 hover:text-[#e8e4de]/70"
-              }`}>
-              {f}
-            </button>
-          ))}
-        </div>
+      <div className="mb-12">
+        <p className="font-['Inter'] text-xs tracking-[0.3em] uppercase text-[#e8e4de]/25 mb-2">Browse</p>
+        <h1 className="font-['Playfair_Display'] text-4xl font-medium text-[#e8e4de]">All Products</h1>
       </div>
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 md:gap-8">
-        {filtered.map((p) => (
+        {products.map((p) => (
           <ProductCard key={p.id} product={p}
             onSelect={() => { setSelectedProduct(p); setView("product"); }}
             onQuickAdd={() => onQuickAdd(p)} />
