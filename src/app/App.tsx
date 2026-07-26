@@ -1455,7 +1455,7 @@ function AdminView({ products, setView, onStockChange, onAddProduct, onDeletePro
 function Footer() {
   return (
     <footer className="border-t border-white/[0.06] py-6">
-      <div className="max-w-[1400px] mx-auto px-8 flex items-center justify-between">
+      <div className="max-w-[1400px] mx-auto px-8 flex items-center justify-center gap-6">
         <p className="font-['Inter'] text-xs text-[#e8e4de]/15">© 2025 GOATED. All rights reserved.</p>
         <a
           href="https://www.instagram.com/goa_ted.tm?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw=="
