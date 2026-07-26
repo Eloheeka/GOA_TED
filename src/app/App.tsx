@@ -1454,37 +1454,17 @@ function AdminView({ products, setView, onStockChange, onAddProduct, onDeletePro
 
 function Footer() {
   return (
-    <footer className="border-t border-white/[0.06] py-16">
-      <div className="max-w-[1400px] mx-auto px-8">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-12">
-          <div>
-            <p className="font-['Playfair_Display'] text-lg font-medium tracking-widest text-[#e8e4de] mb-4">GOATED</p>
-            <p className="font-['Inter'] text-xs text-[#e8e4de]/25 leading-relaxed">Premium clothing, designed to last.</p>
-          </div>
-          {[
-            { title: "Shop", links: ["New Arrivals", "Collections", "All Products"] },
-            { title: "Help", links: ["Shipping Info", "Returns", "Contact Us"] },
-            { title: "Follow", links: ["Instagram", "TikTok"] },
-          ].map(({ title, links }) => (
-            <div key={title}>
-              <p className="font-['Inter'] text-[10px] tracking-widest uppercase text-[#e8e4de]/25 mb-4">{title}</p>
-              <ul className="space-y-2">
-                {links.map((l) => (
-                  <li key={l}>
-                    <a href="#" className="font-['Inter'] text-sm text-[#e8e4de]/35 hover:text-[#e8e4de] transition-colors">{l}</a>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
-        </div>
-        <div className="flex flex-col md:flex-row items-start md:items-center justify-between pt-8 border-t border-white/[0.06] gap-4">
-          <p className="font-['Inter'] text-xs text-[#e8e4de]/15">© 2025 GOATED. All rights reserved.</p>
-          <div className="flex gap-5">
-            <a href="#" className="text-[#e8e4de]/20 hover:text-[#e8e4de] transition-colors"><Instagram size={16} /></a>
-            <a href="#" className="font-['Inter'] text-xs text-[#e8e4de]/20 hover:text-[#e8e4de] transition-colors">TikTok</a>
-          </div>
-        </div>
+    <footer className="border-t border-white/[0.06] py-6">
+      <div className="max-w-[1400px] mx-auto px-8 flex items-center justify-between">
+        <p className="font-['Inter'] text-xs text-[#e8e4de]/15">© 2025 GOATED. All rights reserved.</p>
+        <a
+          href="https://www.instagram.com/goa_ted.tm?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw=="
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-[#e8e4de]/30 hover:text-[#e8e4de] transition-colors"
+        >
+          <Instagram size={16} />
+        </a>
       </div>
     </footer>
   );
