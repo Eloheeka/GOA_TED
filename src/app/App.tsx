@@ -335,7 +335,7 @@ function ProductCard({ product, onSelect, onQuickAdd }: {
         <div className={soldOut ? "opacity-50" : ""}>
           <ImageCarousel images={product.images} alt={product.name} />
         </div>
-        {product.isNew && !soldOut && (
+        {false && product.isNew && !soldOut && (
           <span className="absolute top-3 left-3 bg-[#c8b89a] text-[#0e0e0e] text-[10px] font-['Inter'] font-medium tracking-widest px-2 py-1 uppercase">
             New
           </span>
@@ -452,7 +452,7 @@ function HomeCatalogCard({ product, onSelect, onQuickAdd }: {
           alt={product.name}
           className={`w-full h-full object-contain p-4 transition-transform duration-500 group-hover:scale-105 ${soldOut ? "opacity-40" : ""}`}
         />
-        {product.isNew && !soldOut && (
+        {false && product.isNew && !soldOut && (
           <span className="absolute top-3 left-3 bg-[#c8b89a] text-[#0e0e0e] text-[10px] font-['Inter'] font-semibold tracking-widest px-2 py-0.5 uppercase">
             New
           </span>
@@ -488,7 +488,7 @@ function HomeView({ setView, setSelectedProduct, products, onQuickAdd }: {
   products: Product[];
   onQuickAdd: (p: Product) => void;
 }) {
-  const marqueeText = "NEW DROP · SS 2026 · GOA GUATEMALAN · LIMITED EDITION · SHOP NOW · NEW DROP · SS 2026 · GOA GUATEMALAN · LIMITED EDITION · SHOP NOW · ";
+  const marqueeText = "NEW DROP · SS 2026 · GOA GUATEMALA · LIMITED EDITION · SHOP NOW · NEW DROP · SS 2026 · GOA GUATEMALA · LIMITED EDITION · SHOP NOW · ";
 
   return (
     <div>
@@ -517,7 +517,7 @@ function HomeView({ setView, setSelectedProduct, products, onQuickAdd }: {
             textShadow: "0 2px 60px rgba(0,0,0,0.6)",
           }}
         >
-          GOATED
+          GUATEMALA
         </h1>
 
         {/* SS 2026 sub-label */}
