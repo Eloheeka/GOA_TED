@@ -488,9 +488,11 @@ function HomeView({ setView, setSelectedProduct, products, onQuickAdd }: {
   products: Product[];
   onQuickAdd: (p: Product) => void;
 }) {
+  const marqueeText = "NEW DROP · SS 2026 · GOA GUATEMALAN · LIMITED EDITION · SHOP NOW · NEW DROP · SS 2026 · GOA GUATEMALAN · LIMITED EDITION · SHOP NOW · ";
+
   return (
     <div>
-      {/* Hero — full screen video background */}
+      {/* ── Hero — full screen video ── */}
       <section className="h-screen flex flex-col items-center justify-center relative overflow-hidden bg-[#0e0e0e]">
         {/* Video background */}
         <video
@@ -501,29 +503,56 @@ function HomeView({ setView, setSelectedProduct, products, onQuickAdd }: {
           className="absolute inset-0 w-full h-full object-cover"
           src="/videos/rough-draft.mp4"
         />
-        {/* Dark overlay so text stays legible */}
-        <div className="absolute inset-0 bg-black/40" />
+        {/* Dark overlay */}
+        <div className="absolute inset-0 bg-black/45" />
 
-        {/* GUATEMALA wordmark */}
+        {/* GOATED wordmark */}
         <h1
           className="relative z-10 text-white select-none leading-none text-center"
           style={{
             fontFamily: "'Canterbury', serif",
-            fontSize: "clamp(52px, 12vw, 180px)",
+            fontSize: "clamp(64px, 14vw, 220px)",
             fontWeight: "normal",
             letterSpacing: "0.04em",
-            textShadow: "0 2px 40px rgba(0,0,0,0.5)",
+            textShadow: "0 2px 60px rgba(0,0,0,0.6)",
           }}
         >
-          GUATEMALA
+          GOATED
         </h1>
 
-        <div className="absolute bottom-12 left-0 right-0 flex items-center justify-center px-8 md:px-16 z-10">
-          <p className="font-['Inter'] text-white/40 text-xs tracking-[0.4em] uppercase">SS 2026</p>
-        </div>
+        {/* SS 2026 sub-label */}
+        <p
+          className="relative z-10 mt-4 select-none tracking-[0.45em] uppercase"
+          style={{
+            fontFamily: "'Inter', sans-serif",
+            fontSize: "clamp(12px, 2vw, 22px)",
+            color: "#c8b89a",
+            letterSpacing: "0.45em",
+          }}
+        >
+          SS 2026
+        </p>
       </section>
 
-      {/* Shop Layout — sidebar + product grid */}
+      {/* ── Marquee / Ticker ── */}
+      <div className="bg-[#c8b89a] overflow-hidden py-2.5 select-none">
+        <div
+          className="flex whitespace-nowrap"
+          style={{
+            animation: "marquee 28s linear infinite",
+          }}
+        >
+          {/* Duplicate text so the scroll is seamless */}
+          <span className="font-['Inter'] text-[11px] tracking-[0.25em] uppercase text-[#0e0e0e] font-semibold px-8">
+            {marqueeText}{marqueeText}
+          </span>
+          <span className="font-['Inter'] text-[11px] tracking-[0.25em] uppercase text-[#0e0e0e] font-semibold px-8">
+            {marqueeText}{marqueeText}
+          </span>
+        </div>
+      </div>
+
+      {/* ── Shop Layout — sidebar + product grid ── */}
       <ShopLayout
         products={products}
         setView={setView}
