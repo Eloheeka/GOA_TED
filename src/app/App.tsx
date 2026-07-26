@@ -65,7 +65,7 @@ const INITIAL_PRODUCTS: Product[] = [
   {
     id: "p1",
     name: "GOA BABY TEE Black",
-    price: 45,
+    price: 15000,
     collectionId: "essentials",
     description: "Clean and minimal baby tee in jet black. A staple cut with a tight, cropped fit and subtle GOATED branding.",
     material: "100% Combed Cotton, 180gsm.",
@@ -83,7 +83,7 @@ const INITIAL_PRODUCTS: Product[] = [
   {
     id: "p2",
     name: "GOA BABY TEE White",
-    price: 45,
+    price: 15000,
     collectionId: "essentials",
     description: "The same sharp baby tee silhouette in crisp white. Pairs with everything.",
     material: "100% Combed Cotton, 180gsm.",
@@ -101,7 +101,7 @@ const INITIAL_PRODUCTS: Product[] = [
   {
     id: "p3",
     name: "GOA GUA B.L.S",
-    price: 75,
+    price: 28000,
     collectionId: "essentials",
     description: "Long sleeve essential from the Guatemala collection. Relaxed fit with dropped shoulders.",
     material: "100% Cotton, 220gsm.",
@@ -118,7 +118,7 @@ const INITIAL_PRODUCTS: Product[] = [
   {
     id: "p4",
     name: "GOA GUA H",
-    price: 95,
+    price: 30000,
     collectionId: "essentials",
     description: "Guatemala collection hoodie. Heavyweight construction with a clean front and structured hood.",
     material: "80% Cotton, 20% Polyester, 380gsm.",
@@ -136,7 +136,7 @@ const INITIAL_PRODUCTS: Product[] = [
   {
     id: "p5",
     name: "GOA GUA LS",
-    price: 70,
+    price: 28000,
     collectionId: "essentials",
     description: "Long sleeve tee from the Guatemala series. Minimal, versatile, essential.",
     material: "100% Cotton, 200gsm.",
@@ -153,7 +153,7 @@ const INITIAL_PRODUCTS: Product[] = [
   {
     id: "p6",
     name: "GOA.PFYH Tee",
-    price: 55,
+    price: 20000,
     collectionId: "essentials",
     description: "Printed for your head. Statement tee with bold front graphics from the GOATED archive.",
     material: "100% Cotton, 200gsm.",
@@ -171,7 +171,7 @@ const INITIAL_PRODUCTS: Product[] = [
   {
     id: "p7",
     name: "Polo",
-    price: 65,
+    price: 20000,
     collectionId: "essentials",
     description: "Classic polo with a modern GOATED fit. Clean collar, subtle branding, built to last.",
     material: "100% Piqué Cotton, 220gsm.",
@@ -188,7 +188,7 @@ const INITIAL_PRODUCTS: Product[] = [
   {
     id: "p8",
     name: "Striped Tee",
-    price: 50,
+    price: 25000,
     collectionId: "essentials",
     description: "Heritage stripe pattern reinterpreted through the GOATED lens. Relaxed fit, midweight fabric.",
     material: "100% Cotton, 200gsm.",
@@ -216,7 +216,7 @@ const REVENUE_DATA = [
 ];
 
 function formatPrice(n: number) {
-  return `$${n.toFixed(0)}`;
+  return n.toLocaleString() + " FRW";
 }
 
 type StockStatus = "in-stock" | "remaining-few" | "low" | "sold-out";
@@ -473,7 +473,7 @@ function HomeCatalogCard({ product, onSelect, onQuickAdd }: {
           {product.name}
         </p>
         <p className="font-['Inter'] text-[11px] text-[#e8e4de]/50">
-          £{product.price.toFixed(2)}
+          {formatPrice(product.price)}
         </p>
       </div>
     </div>
