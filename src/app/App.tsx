@@ -2,11 +2,11 @@ import { useState } from "react";
 import {
   Search, ShoppingBag, ChevronLeft, ChevronRight, X, Plus, Minus,
   LayoutDashboard, Package, ShoppingCart, Archive, AlertCircle,
-  Instagram, Check, Trash2, Edit2, ArrowRight, Bell,
+  Instagram, Check, Trash2, Edit2, Bell,
 } from "lucide-react";
 import { BarChart, Bar, XAxis, YAxis, ResponsiveContainer, Tooltip } from "recharts";
 
-type View = "home" | "shop" | "product" | "cart" | "checkout" | "confirmation" | "admin" | "collection";
+type View = "home" | "shop" | "product" | "cart" | "checkout" | "confirmation" | "admin";
 
 interface Product {
   id: string;
@@ -37,119 +37,168 @@ interface CartItem {
   quantity: number;
 }
 
+// ── Auth ──────────────────────────────────────────────────────────────────────
+
+const ALLOWED_USERS: { email: string; password: string; name: string }[] = [
+  { email: "ishimwesamuel183@gmail.com", password: "goated@2026", name: "Samuel" },
+];
+
 // ── Data ──────────────────────────────────────────────────────────────────────
 
 const COLLECTIONS: Collection[] = [
-  { id: "essentials", name: "GOATED Essentials", image: "https://images.unsplash.com/photo-1551232864-3f0890e580d9?w=900&h=1100&fit=crop&auto=format", tagline: "The foundation." },
-  { id: "summer", name: "Summer Collection", image: "https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=900&h=1100&fit=crop&auto=format", tagline: "Light. Easy. Effortless." },
-  { id: "oversized", name: "Oversized Collection", image: "https://images.unsplash.com/photo-1516762689617-e1cffcef479d?w=900&h=1100&fit=crop&auto=format", tagline: "Volume as language." },
-  { id: "limited", name: "Limited Drop", image: "https://images.unsplash.com/photo-1539109136881-3be0616acf4b?w=900&h=1100&fit=crop&auto=format", tagline: "Rare by design." },
-  { id: "streetwear", name: "Streetwear Series", image: "https://images.unsplash.com/photo-1506629082955-511b1aa562c8?w=900&h=1100&fit=crop&auto=format", tagline: "Worn on the ground." },
+  { id: "essentials", name: "GOATED Essentials", image: "/images/GOA BABY TEE black png.png", tagline: "The foundation." },
 ];
 
-const PRODUCTS: Product[] = [
+// Sidebar category labels → product id mapping
+const CATEGORY_PRODUCTS: { label: string; productId: string }[] = [
+  { label: "GOA BABY TEE black", productId: "p1" },
+  { label: "GOA BABY TEE white", productId: "p2" },
+  { label: "GOA GUA B.L.S",      productId: "p3" },
+  { label: "GOA GUA H",          productId: "p4" },
+  { label: "GOA GUA LS",         productId: "p5" },
+  { label: "GOA.PFYH",           productId: "p6" },
+  { label: "POLO",               productId: "p7" },
+  { label: "STRIPED TEE",        productId: "p8" },
+];
+
+const INITIAL_PRODUCTS: Product[] = [
   {
     id: "p1",
-    name: "Classic Logo Tee",
+    name: "GOA BABY TEE Black",
     price: 45,
     collectionId: "essentials",
-    description: "The foundation of any wardrobe. Cut from premium combed cotton with a relaxed silhouette that drapes perfectly on the body. Finished with a tonal GOATED mark at the chest.",
-    material: "100% Combed Cotton, 200gsm. Pre-washed for a lived-in feel.",
-    colors: [{ name: "Jet Black", hex: "#0a0a0a" }, { name: "White", hex: "#f5f5f5" }, { name: "Charcoal", hex: "#4a4a4a" }, { name: "Sand", hex: "#c8b89a" }],
-    sizes: ["XS", "S", "M", "L", "XL", "XXL"],
-    stock: 24,
+    description: "Clean and minimal baby tee in jet black. A staple cut with a tight, cropped fit and subtle GOATED branding.",
+    material: "100% Combed Cotton, 180gsm.",
+    colors: [{ name: "Jet Black", hex: "#0a0a0a" }],
+    sizes: ["XS", "S", "M", "L", "XL"],
+    stock: 20,
     images: [
-      "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=800&h=1000&fit=crop&auto=format",
-      "https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?w=800&h=1000&fit=crop&auto=format",
-      "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=800&h=1000&fit=crop&auto=format",
+      "/images/GOA BABY TEE black png.png",
+      "/images/baby_tee_black.JPG",
+      "/images/GOA BABY TEE black png.png",
     ],
     isNew: true,
     published: true,
   },
   {
     id: "p2",
-    name: "Essential Hoodie",
-    price: 95,
+    name: "GOA BABY TEE White",
+    price: 45,
     collectionId: "essentials",
-    description: "Heavyweight French terry with a clean, unbroken silhouette. Dropped shoulders, kangaroo pocket, and a structured hood that holds its shape.",
-    material: "80% Cotton, 20% Polyester, 380gsm French Terry.",
-    colors: [{ name: "Jet Black", hex: "#0a0a0a" }, { name: "Concrete", hex: "#7a7a7a" }, { name: "Cream", hex: "#f0ebe2" }],
-    sizes: ["S", "M", "L", "XL", "XXL"],
-    stock: 12,
+    description: "The same sharp baby tee silhouette in crisp white. Pairs with everything.",
+    material: "100% Combed Cotton, 180gsm.",
+    colors: [{ name: "White", hex: "#f5f5f5" }],
+    sizes: ["XS", "S", "M", "L", "XL"],
+    stock: 18,
     images: [
-      "https://images.unsplash.com/photo-1556821840-3a63f8a79d37?w=800&h=1000&fit=crop&auto=format",
-      "https://images.unsplash.com/photo-1523381210434-271e8be1f52b?w=800&h=1000&fit=crop&auto=format",
-      "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800&h=1000&fit=crop&auto=format",
+      "/images/GOA BABY TEE WHITE PNG.png",
+      "/images/GOA BABY TEE WHITE PNG.png",
+      "/images/GOA BABY TEE WHITE PNG.png",
     ],
     isNew: true,
     published: true,
   },
   {
     id: "p3",
-    name: "Wide Leg Cargo",
-    price: 120,
-    collectionId: "streetwear",
-    description: "Utility silhouette with an editorial finish. Six functional cargo pockets, wide-leg cut with a tapered hem.",
-    material: "100% Ripstop Cotton, 210gsm. Stone-washed finish.",
-    colors: [{ name: "Jet Black", hex: "#0a0a0a" }, { name: "Olive", hex: "#6b6b47" }, { name: "Khaki", hex: "#b5a68a" }],
-    sizes: ["S", "M", "L", "XL"],
-    stock: 8,
+    name: "GOA GUA B.L.S",
+    price: 75,
+    collectionId: "essentials",
+    description: "Long sleeve essential from the Guatemala collection. Relaxed fit with dropped shoulders.",
+    material: "100% Cotton, 220gsm.",
+    colors: [{ name: "Black", hex: "#0a0a0a" }],
+    sizes: ["S", "M", "L", "XL", "XXL"],
+    stock: 14,
     images: [
-      "https://images.unsplash.com/photo-1506629082955-511b1aa562c8?w=800&h=1000&fit=crop&auto=format",
-      "https://images.unsplash.com/photo-1617137968427-85924c800a22?w=800&h=1000&fit=crop&auto=format",
-      "https://images.unsplash.com/photo-1539109136881-3be0616acf4b?w=800&h=1000&fit=crop&auto=format",
+      "/images/GOA GUA B.LS.png",
+      "/images/bls.jpg",
+      "/images/bls2.jpg",
     ],
     published: true,
   },
   {
     id: "p4",
-    name: "Oversized Linen Shirt",
-    price: 85,
-    collectionId: "oversized",
-    description: "Proportions that command attention. Washed linen in a boxy, elongated fit with dropped sleeves and an open-collar design.",
-    material: "100% European Linen, enzyme-washed for softness.",
-    colors: [{ name: "White", hex: "#f5f5f5" }, { name: "Sand", hex: "#c8b89a" }, { name: "Charcoal", hex: "#4a4a4a" }],
-    sizes: ["XS", "S", "M", "L", "XL", "XXL"],
-    stock: 16,
+    name: "GOA GUA H",
+    price: 95,
+    collectionId: "essentials",
+    description: "Guatemala collection hoodie. Heavyweight construction with a clean front and structured hood.",
+    material: "80% Cotton, 20% Polyester, 380gsm.",
+    colors: [{ name: "Black", hex: "#0a0a0a" }],
+    sizes: ["S", "M", "L", "XL", "XXL"],
+    stock: 10,
     images: [
-      "https://images.unsplash.com/photo-1516762689617-e1cffcef479d?w=800&h=1000&fit=crop&auto=format",
-      "https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=800&h=1000&fit=crop&auto=format",
-      "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=800&h=1000&fit=crop&auto=format",
+      "/images/GOA GUA H.png",
+      "/images/GUA_h (1).jpg",
+      "/images/GUA_h1.JPG",
     ],
     isNew: true,
     published: true,
   },
   {
     id: "p5",
-    name: "Summer Linen Set",
-    price: 155,
-    collectionId: "summer",
-    description: "Matched linen co-ord designed for heat. The shirt and trouser share the same lightweight fabric — wear together or separate.",
-    material: "100% Stonewashed Linen. Shirt + trouser set.",
-    colors: [{ name: "Natural", hex: "#d4c9b0" }, { name: "Sky", hex: "#9ab8c8" }, { name: "White", hex: "#f5f5f5" }],
+    name: "GOA GUA LS",
+    price: 70,
+    collectionId: "essentials",
+    description: "Long sleeve tee from the Guatemala series. Minimal, versatile, essential.",
+    material: "100% Cotton, 200gsm.",
+    colors: [{ name: "Black", hex: "#0a0a0a" }],
     sizes: ["S", "M", "L", "XL"],
-    stock: 6,
+    stock: 16,
     images: [
-      "https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=800&h=1000&fit=crop&auto=format",
-      "https://images.unsplash.com/photo-1509631179647-0177331693ae?w=800&h=1000&fit=crop&auto=format",
-      "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=800&h=1000&fit=crop&auto=format",
+      "/images/GOA GUA LS.png",
+      "/images/ls.jpg",
+      "/images/ls1.jpg",
     ],
     published: true,
   },
   {
     id: "p6",
-    name: "Varsity Jacket",
-    price: 210,
-    collectionId: "limited",
-    description: "One-time drop. Premium wool body with leather sleeves, ribbed trims, and custom GOATED chenille script. When it's gone, it's gone.",
-    material: "80% Wool body, 20% Genuine Leather sleeves. Quilted satin lining.",
-    colors: [{ name: "Black / Black", hex: "#0a0a0a" }, { name: "Black / Caramel", hex: "#8B6914" }],
-    sizes: ["S", "M", "L", "XL"],
-    stock: 3,
+    name: "GOA.PFYH Tee",
+    price: 55,
+    collectionId: "essentials",
+    description: "Printed for your head. Statement tee with bold front graphics from the GOATED archive.",
+    material: "100% Cotton, 200gsm.",
+    colors: [{ name: "White", hex: "#f5f5f5" }],
+    sizes: ["XS", "S", "M", "L", "XL", "XXL"],
+    stock: 12,
     images: [
-      "https://images.unsplash.com/photo-1539109136881-3be0616acf4b?w=800&h=1000&fit=crop&auto=format",
-      "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&h=1000&fit=crop&auto=format",
-      "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=800&h=1000&fit=crop&auto=format",
+      "/images/GOA.PFYH TEE png.png",
+      "/images/pfyh.jpg",
+      "/images/pfyh2.jpg",
+    ],
+    isNew: true,
+    published: true,
+  },
+  {
+    id: "p7",
+    name: "Polo",
+    price: 65,
+    collectionId: "essentials",
+    description: "Classic polo with a modern GOATED fit. Clean collar, subtle branding, built to last.",
+    material: "100% Piqué Cotton, 220gsm.",
+    colors: [{ name: "Black", hex: "#0a0a0a" }],
+    sizes: ["S", "M", "L", "XL"],
+    stock: 8,
+    images: [
+      "/images/POLO.png",
+      "/images/polo.jpg",
+      "/images/polo1.jpg",
+    ],
+    published: true,
+  },
+  {
+    id: "p8",
+    name: "Striped Tee",
+    price: 50,
+    collectionId: "essentials",
+    description: "Heritage stripe pattern reinterpreted through the GOATED lens. Relaxed fit, midweight fabric.",
+    material: "100% Cotton, 200gsm.",
+    colors: [{ name: "Multi", hex: "#6b6b6b" }],
+    sizes: ["XS", "S", "M", "L", "XL", "XXL"],
+    stock: 22,
+    images: [
+      "/images/STRIPED TEE.png",
+      "/images/stripped_tee.JPG",
+      "/images/stripped_tee1.JPG",
     ],
     isNew: true,
     published: true,
@@ -245,15 +294,6 @@ function Nav({ setView, cartCount, searchOpen, setSearchOpen }: {
           className="font-['Playfair_Display'] text-xl font-semibold tracking-[0.18em] uppercase text-[#e8e4de] hover:text-[#c8b89a] transition-colors">
           GOATED
         </button>
-        <div className="hidden md:flex items-center gap-8">
-          {["Collections", "Latest Drops", "Shop"].map((label) => (
-            <button key={label}
-              onClick={() => setView(label === "Collections" ? "collection" : "shop")}
-              className="font-['Inter'] text-sm text-[#e8e4de]/60 hover:text-[#e8e4de] transition-colors tracking-wide">
-              {label}
-            </button>
-          ))}
-        </div>
         <div className="flex items-center gap-5">
           {searchOpen ? (
             <div className="flex items-center gap-2 border-b border-white/20 pb-0.5">
@@ -332,78 +372,164 @@ function ProductCard({ product, onSelect, onQuickAdd }: {
   );
 }
 
+// ── Product Grid ──────────────────────────────────────────────────────────────
+
+function ShopLayout({ products, setView, setSelectedProduct, onQuickAdd }: {
+  products: Product[];
+  setView: (v: View) => void;
+  setSelectedProduct: (p: Product) => void;
+  onQuickAdd: (p: Product) => void;
+}) {
+  const [activeId, setActiveId] = useState<string | null>(null);
+
+  const published = products.filter((p) => p.published);
+  // When a category is selected, show only that product; otherwise show all
+  const displayed = activeId ? published.filter((p) => p.id === activeId) : published;
+
+  return (
+    <section className="bg-[#0e0e0e] min-h-screen">
+      <div className="max-w-[1400px] mx-auto flex">
+        {/* Sidebar */}
+        <aside className="w-48 shrink-0 py-12 pr-4 border-r border-white/[0.06] sticky top-16 self-start h-[calc(100vh-4rem)] overflow-y-auto">
+          <button
+            onClick={() => setActiveId(null)}
+            className={`w-full text-left font-['Inter'] text-[11px] tracking-widest uppercase py-1.5 px-3 mb-3 transition-colors ${
+              activeId === null ? "text-[#c8b89a]" : "text-[#e8e4de]/35 hover:text-[#e8e4de]/70"
+            }`}
+          >
+            ALL
+          </button>
+          <div className="h-px bg-white/[0.06] mb-3" />
+          <nav className="flex flex-col gap-0.5">
+            {CATEGORY_PRODUCTS.map((cat) => (
+              <button
+                key={cat.productId}
+                onClick={() => setActiveId(cat.productId)}
+                className={`text-left font-['Inter'] text-[11px] tracking-widest uppercase py-1.5 px-3 transition-colors ${
+                  activeId === cat.productId
+                    ? "text-[#c8b89a]"
+                    : "text-[#e8e4de]/35 hover:text-[#e8e4de]/70"
+                }`}
+              >
+                {cat.label}
+              </button>
+            ))}
+          </nav>
+        </aside>
+
+        {/* Grid */}
+        <div className="flex-1 px-10 py-12">
+          <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 gap-x-8 gap-y-12">
+            {displayed.map((p) => (
+              <HomeCatalogCard
+                key={p.id}
+                product={p}
+                onSelect={() => { setSelectedProduct(p); setView("product"); }}
+                onQuickAdd={() => onQuickAdd(p)}
+              />
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// Product card styled like the reference image: clean product photo, name + price below
+function HomeCatalogCard({ product, onSelect, onQuickAdd }: {
+  product: Product; onSelect: () => void; onQuickAdd: () => void;
+}) {
+  const soldOut = product.stock === 0;
+  return (
+    <div
+      className={`group ${soldOut ? "cursor-default" : "cursor-pointer"}`}
+      onClick={soldOut ? undefined : onSelect}
+    >
+      {/* Image */}
+      <div className="relative bg-[#141414] aspect-[4/5] overflow-hidden">
+        <img
+          src={product.images[0]}
+          alt={product.name}
+          className={`w-full h-full object-contain p-4 transition-transform duration-500 group-hover:scale-105 ${soldOut ? "opacity-40" : ""}`}
+        />
+        {product.isNew && !soldOut && (
+          <span className="absolute top-3 left-3 bg-[#c8b89a] text-[#0e0e0e] text-[10px] font-['Inter'] font-semibold tracking-widest px-2 py-0.5 uppercase">
+            New
+          </span>
+        )}
+        {!soldOut && (
+          <button
+            onClick={(e) => { e.stopPropagation(); onQuickAdd(); }}
+            className="absolute bottom-0 left-0 right-0 py-2.5 bg-black/80 font-['Inter'] text-[10px] tracking-widest uppercase text-[#e8e4de]/70 hover:text-[#e8e4de] hover:bg-black transition-colors translate-y-full group-hover:translate-y-0 duration-200"
+          >
+            Quick Add
+          </button>
+        )}
+      </div>
+
+      {/* Info */}
+      <div className="mt-3 space-y-0.5 px-0.5">
+        <p className="font-['Inter'] text-[11px] tracking-[0.12em] uppercase text-[#e8e4de] leading-snug">
+          {product.name}
+        </p>
+        <p className="font-['Inter'] text-[11px] text-[#e8e4de]/50">
+          £{product.price.toFixed(2)}
+        </p>
+      </div>
+    </div>
+  );
+}
+
 // ── Home View ─────────────────────────────────────────────────────────────────
 
-function HomeView({ setView, setSelectedProduct, products, collections, onQuickAdd }: {
+function HomeView({ setView, setSelectedProduct, products, onQuickAdd }: {
   setView: (v: View) => void;
   setSelectedProduct: (p: Product) => void;
   products: Product[];
-  collections: Collection[];
   onQuickAdd: (p: Product) => void;
 }) {
   return (
     <div>
-      {/* Hero — full screen wordmark */}
+      {/* Hero — full screen video background */}
       <section className="h-screen flex flex-col items-center justify-center relative overflow-hidden bg-[#0e0e0e]">
-        {/* Subtle grain texture via radial gradient */}
-        <div className="absolute inset-0 opacity-[0.03]"
-          style={{ backgroundImage: "radial-gradient(circle at 1px 1px, #fff 1px, transparent 0)", backgroundSize: "32px 32px" }} />
+        {/* Video background */}
+        <video
+          autoPlay
+          muted
+          loop
+          playsInline
+          className="absolute inset-0 w-full h-full object-cover"
+          src="/videos/rough-draft.mp4"
+        />
+        {/* Dark overlay so text stays legible */}
+        <div className="absolute inset-0 bg-black/40" />
 
-        <h1 className="font-['Playfair_Display'] font-semibold text-[#e8e4de] select-none leading-none text-center"
-          style={{ fontSize: "clamp(72px, 18vw, 260px)", letterSpacing: "-0.02em" }}>
-          GOATED
+        {/* GUATEMALA wordmark */}
+        <h1
+          className="relative z-10 text-white select-none leading-none text-center"
+          style={{
+            fontFamily: "'Canterbury', serif",
+            fontSize: "clamp(52px, 12vw, 180px)",
+            fontWeight: "normal",
+            letterSpacing: "0.04em",
+            textShadow: "0 2px 40px rgba(0,0,0,0.5)",
+          }}
+        >
+          GUATEMALA
         </h1>
 
-        <div className="absolute bottom-12 left-0 right-0 flex items-center justify-between px-8 md:px-16">
-          <p className="font-['Inter'] text-[#e8e4de]/25 text-xs tracking-[0.4em] uppercase">Premium Clothing</p>
-          <button onClick={() => setView("shop")}
-            className="font-['Inter'] text-xs tracking-widest uppercase text-[#e8e4de]/40 hover:text-[#e8e4de] transition-colors flex items-center gap-2">
-            Shop Now <ArrowRight size={12} />
-          </button>
-          <p className="font-['Inter'] text-[#e8e4de]/25 text-xs tracking-[0.4em] uppercase">SS 2025</p>
+        <div className="absolute bottom-12 left-0 right-0 flex items-center justify-center px-8 md:px-16 z-10">
+          <p className="font-['Inter'] text-white/40 text-xs tracking-[0.4em] uppercase">SS 2026</p>
         </div>
       </section>
 
-      {/* Latest Drops */}
-      <section className="max-w-[1400px] mx-auto px-8 py-24">
-        <div className="flex items-baseline justify-between mb-12">
-          <h2 className="font-['Playfair_Display'] text-3xl font-medium text-[#e8e4de]">Latest Drops</h2>
-          <button onClick={() => setView("shop")}
-            className="font-['Inter'] text-xs tracking-widest uppercase text-[#e8e4de]/30 hover:text-[#e8e4de] transition-colors flex items-center gap-1.5">
-            View All <ArrowRight size={12} />
-          </button>
-        </div>
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8">
-          {products.filter((p) => p.isNew).slice(0, 4).map((p) => (
-            <ProductCard key={p.id} product={p}
-              onSelect={() => { setSelectedProduct(p); setView("product"); }}
-              onQuickAdd={() => onQuickAdd(p)} />
-          ))}
-        </div>
-      </section>
-
-      {/* Collections */}
-      <section className="bg-[#0a0a0a] py-24">
-        <div className="max-w-[1400px] mx-auto px-8">
-          <h2 className="font-['Playfair_Display'] text-3xl font-medium text-[#e8e4de] mb-12">Collections</h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-3">
-            {collections.map((col, i) => (
-              <button key={col.id} onClick={() => setView("collection")}
-                className={`group relative overflow-hidden text-left ${i === 0 ? "md:col-span-2 md:row-span-2" : ""}`}>
-                <div className={`relative ${i === 0 ? "aspect-[3/4]" : "aspect-square"} bg-[#1a1a1a]`}>
-                  <img src={col.image} alt={col.name}
-                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 opacity-80 group-hover:opacity-70" />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
-                  <div className="absolute bottom-0 left-0 right-0 p-5">
-                    <p className="font-['Inter'] text-white/40 text-[10px] tracking-widest uppercase mb-1">{col.tagline}</p>
-                    <h3 className="font-['Playfair_Display'] text-white font-medium leading-tight">{col.name}</h3>
-                  </div>
-                </div>
-              </button>
-            ))}
-          </div>
-        </div>
-      </section>
+      {/* Shop Layout — sidebar + product grid */}
+      <ShopLayout
+        products={products}
+        setView={setView}
+        setSelectedProduct={setSelectedProduct}
+        onQuickAdd={onQuickAdd}
+      />
 
       <Footer />
     </div>
@@ -454,36 +580,6 @@ function ShopView({ setView, setSelectedProduct, products, onQuickAdd }: {
   );
 }
 
-// ── Collections View ──────────────────────────────────────────────────────────
-
-function CollectionView({ setView }: { setView: (v: View) => void }) {
-  return (
-    <div className="max-w-[1400px] mx-auto px-8 pt-32 pb-24">
-      <div className="mb-12">
-        <p className="font-['Inter'] text-xs tracking-[0.3em] uppercase text-[#e8e4de]/25 mb-2">Explore</p>
-        <h1 className="font-['Playfair_Display'] text-4xl font-medium text-[#e8e4de]">Collections</h1>
-      </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-        {COLLECTIONS.map((col) => (
-          <button key={col.id} onClick={() => setView("shop")}
-            className="group relative overflow-hidden aspect-[3/4] bg-[#1a1a1a] text-left">
-            <img src={col.image} alt={col.name}
-              className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 opacity-80 group-hover:opacity-70" />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent" />
-            <div className="absolute bottom-0 left-0 right-0 p-8">
-              <p className="font-['Inter'] text-white/40 text-[10px] tracking-widest uppercase mb-2">{col.tagline}</p>
-              <h3 className="font-['Playfair_Display'] text-white text-2xl font-medium mb-4">{col.name}</h3>
-              <span className="font-['Inter'] text-white/50 text-[11px] tracking-widest uppercase border-b border-white/20 pb-0.5">
-                Browse Collection
-              </span>
-            </div>
-          </button>
-        ))}
-      </div>
-    </div>
-  );
-}
-
 // ── Product View ──────────────────────────────────────────────────────────────
 
 function ProductView({ product, setView, addToCart }: {
@@ -512,7 +608,7 @@ function ProductView({ product, setView, addToCart }: {
         <div className="space-y-3">
           <div className="aspect-[4/5] bg-[#1a1a1a] overflow-hidden">
             <img src={product.images[mainImg]} alt={product.name}
-              className="w-full h-full object-cover transition-opacity duration-300" />
+              className="w-full h-full object-contain p-6 transition-opacity duration-300" />
           </div>
           <div className="grid grid-cols-3 gap-3">
             {product.images.map((img, i) => (
@@ -520,13 +616,8 @@ function ProductView({ product, setView, addToCart }: {
                 className={`aspect-[4/5] bg-[#1a1a1a] overflow-hidden border-2 transition-colors ${
                   mainImg === i ? "border-[#c8b89a]" : "border-transparent opacity-50 hover:opacity-80"
                 }`}>
-                <img src={img} alt={`View ${i + 1}`} className="w-full h-full object-cover" />
+                <img src={img} alt={`View ${i + 1}`} className="w-full h-full object-contain p-2" />
               </button>
-            ))}
-          </div>
-          <div className="grid grid-cols-3 gap-3 pt-1">
-            {["Front View", "Back View", "On Model"].map((label) => (
-              <p key={label} className="font-['Inter'] text-[10px] text-[#e8e4de]/20 tracking-wide text-center">{label}</p>
             ))}
           </div>
         </div>
@@ -538,7 +629,6 @@ function ProductView({ product, setView, addToCart }: {
           )}
           <h1 className="font-['Playfair_Display'] text-4xl font-medium text-[#e8e4de] mb-2">{product.name}</h1>
           <p className="font-['Inter'] text-2xl text-[#e8e4de]/70 mb-8">{formatPrice(product.price)}</p>
-          <p className="font-['Inter'] text-sm text-[#e8e4de]/50 leading-relaxed mb-8">{product.description}</p>
 
           {/* Color */}
           <div className="mb-6">
@@ -590,7 +680,6 @@ function ProductView({ product, setView, addToCart }: {
 
           <div className="flex items-center gap-4 mb-8">
             <StockBadge stock={product.stock} />
-            <span className="font-['Inter'] text-xs text-[#e8e4de]/25">Free delivery over $100 · 3–5 business days</span>
           </div>
 
           <div className="space-y-3">
@@ -612,10 +701,6 @@ function ProductView({ product, setView, addToCart }: {
             )}
           </div>
 
-          <div className="mt-10 pt-8 border-t border-white/[0.06]">
-            <p className="font-['Inter'] text-xs tracking-widest uppercase text-[#e8e4de]/25 mb-2">Material</p>
-            <p className="font-['Inter'] text-sm text-[#e8e4de]/40">{product.material}</p>
-          </div>
         </div>
       </div>
     </div>
@@ -858,29 +943,143 @@ function ConfirmationView({ setView }: { setView: (v: View) => void }) {
   );
 }
 
+// ── Admin Login ───────────────────────────────────────────────────────────────
+
+function AdminLogin({ onSuccess }: { onSuccess: (name: string) => void }) {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    setLoading(true);
+    setError("");
+    setTimeout(() => {
+      const user = ALLOWED_USERS.find(
+        (u) => u.email.toLowerCase() === email.toLowerCase() && u.password === password
+      );
+      if (user) {
+        onSuccess(user.name);
+      } else {
+        setError("Invalid email or password.");
+      }
+      setLoading(false);
+    }, 400);
+  };
+
+  const inputCls =
+    "w-full border border-white/10 bg-[#1a1a1a] px-4 py-3 font-['Inter'] text-sm text-[#e8e4de] focus:outline-none focus:border-[#c8b89a] transition-colors placeholder:text-[#e8e4de]/15";
+
+  return (
+    <div className="min-h-screen bg-[#0a0a0a] flex items-center justify-center px-4">
+      <div className="w-full max-w-sm">
+        <div className="mb-10 text-center">
+          <p className="font-['Playfair_Display'] text-2xl font-medium text-[#e8e4de] tracking-widest mb-1">GOATED</p>
+          <p className="font-['Inter'] text-xs tracking-widest uppercase text-[#e8e4de]/25">Admin Portal</p>
+        </div>
+        <form onSubmit={handleSubmit} className="space-y-3">
+          <div>
+            <label className="font-['Inter'] text-xs text-[#e8e4de]/30 block mb-1.5">Email</label>
+            <input
+              type="email" required autoFocus
+              value={email} onChange={(e) => setEmail(e.target.value)}
+              className={inputCls} placeholder="admin@goated.com"
+            />
+          </div>
+          <div>
+            <label className="font-['Inter'] text-xs text-[#e8e4de]/30 block mb-1.5">Password</label>
+            <input
+              type="password" required
+              value={password} onChange={(e) => setPassword(e.target.value)}
+              className={inputCls} placeholder="••••••••"
+            />
+          </div>
+          {error && (
+            <p className="font-['Inter'] text-xs text-red-400 pt-1">{error}</p>
+          )}
+          <button
+            type="submit" disabled={loading}
+            className="w-full mt-2 py-3.5 bg-[#e8e4de] text-[#0e0e0e] font-['Inter'] text-xs tracking-widest uppercase hover:bg-[#c8b89a] transition-colors disabled:opacity-40"
+          >
+            {loading ? "Signing in…" : "Sign In"}
+          </button>
+        </form>
+      </div>
+    </div>
+  );
+}
+
 // ── Admin ─────────────────────────────────────────────────────────────────────
 
-function AdminView({ products, setView, onStockChange }: {
-  products: Product[]; setView: (v: View) => void;
+function AdminView({ products, setView, onStockChange, onAddProduct, onDeleteProduct, onTogglePublish, adminName, onLogout }: {
+  products: Product[];
+  setView: (v: View) => void;
   onStockChange: (id: string, stock: number) => void;
+  onAddProduct: (p: Product) => void;
+  onDeleteProduct: (id: string) => void;
+  onTogglePublish: (id: string) => void;
+  adminName: string;
+  onLogout: () => void;
 }) {
   const [adminTab, setAdminTab] = useState<"dashboard" | "products" | "orders" | "inventory">("dashboard");
-  const [editProducts, setEditProducts] = useState(products.map((p) => ({ ...p })));
+  const [showAddForm, setShowAddForm] = useState(false);
+  const [editingProduct, setEditingProduct] = useState<Product | null>(null);
 
-  // Keep editProducts in sync when parent stock changes (e.g. after a purchase)
-  const mergedProducts = editProducts.map((ep) => {
-    const live = products.find((p) => p.id === ep.id);
-    return live ? { ...ep, stock: live.stock } : ep;
-  });
+  // ── Add / Edit form state ──
+  const blankForm = {
+    name: "", price: "", description: "", material: "",
+    sizes: "S, M, L, XL", colors: "Black:#0a0a0a",
+    image: "", stock: "10", published: true,
+  };
+  const [form, setForm] = useState(blankForm);
 
-  const togglePublish = (id: string) =>
-    setEditProducts((prev) => prev.map((p) => p.id === id ? { ...p, published: !p.published } : p));
+  const openAddForm = () => { setForm(blankForm); setEditingProduct(null); setShowAddForm(true); };
+  const openEditForm = (p: Product) => {
+    setForm({
+      name: p.name, price: String(p.price), description: p.description,
+      material: p.material,
+      sizes: p.sizes.join(", "),
+      colors: p.colors.map((c) => `${c.name}:${c.hex}`).join(", "),
+      image: p.images[0], stock: String(p.stock), published: p.published,
+    });
+    setEditingProduct(p);
+    setShowAddForm(true);
+  };
+
+  const handleFormSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    const parsedColors = form.colors.split(",").map((s) => {
+      const [name, hex] = s.trim().split(":");
+      return { name: name?.trim() || "Default", hex: hex?.trim() || "#000000" };
+    }).filter((c) => c.name);
+    const parsedSizes = form.sizes.split(",").map((s) => s.trim()).filter(Boolean);
+    const img = form.image.trim() || "/images/GOA BABY TEE black png.png";
+    const newProduct: Product = {
+      id: editingProduct ? editingProduct.id : `p${Date.now()}`,
+      name: form.name,
+      price: parseFloat(form.price) || 0,
+      collectionId: "essentials",
+      description: form.description,
+      material: form.material,
+      colors: parsedColors.length ? parsedColors : [{ name: "Default", hex: "#0a0a0a" }],
+      sizes: parsedSizes.length ? parsedSizes : ["S", "M", "L", "XL"],
+      stock: parseInt(form.stock) || 0,
+      images: [img, img, img],
+      isNew: true,
+      published: form.published,
+    };
+    onAddProduct(newProduct);
+    setShowAddForm(false);
+    setEditingProduct(null);
+  };
+
+  const mergedProducts = products;
 
   const adjustStock = (id: string, delta: number) => {
     const product = products.find((p) => p.id === id);
     if (!product) return;
-    const next = Math.max(0, product.stock + delta);
-    onStockChange(id, next);
+    onStockChange(id, Math.max(0, product.stock + delta));
   };
 
   const setStockDirect = (id: string, val: string) => {
@@ -932,10 +1131,18 @@ function AdminView({ products, setView, onStockChange }: {
               </button>
             ))}
           </nav>
-          <div className="absolute bottom-6 left-0 right-0 px-6">
+          <div className="absolute bottom-6 left-0 right-0 px-4 space-y-2">
+            <div className="px-2 pb-2 border-b border-white/[0.06]">
+              <p className="font-['Inter'] text-[10px] text-[#e8e4de]/25 tracking-wide">Signed in as</p>
+              <p className="font-['Inter'] text-xs text-[#e8e4de]/50 mt-0.5 truncate">{adminName}</p>
+            </div>
             <button onClick={() => setView("home")}
-              className="w-full font-['Inter'] text-xs tracking-widest uppercase text-[#e8e4de]/20 hover:text-[#e8e4de]/50 transition-colors">
+              className="w-full font-['Inter'] text-xs tracking-widest uppercase text-[#e8e4de]/20 hover:text-[#e8e4de]/50 transition-colors text-left px-2 py-1">
               ← Back to Site
+            </button>
+            <button onClick={onLogout}
+              className="w-full font-['Inter'] text-xs tracking-widest uppercase text-red-400/40 hover:text-red-400/70 transition-colors text-left px-2 py-1">
+              Sign Out
             </button>
           </div>
         </aside>
@@ -994,35 +1201,112 @@ function AdminView({ products, setView, onStockChange }: {
             <div>
               <div className="flex items-center justify-between mb-8">
                 <h1 className="font-['Playfair_Display'] text-3xl font-medium text-[#e8e4de]">Products</h1>
-                <button className="font-['Inter'] text-xs tracking-widest uppercase bg-[#e8e4de] text-[#0e0e0e] px-5 py-2.5 hover:bg-[#c8b89a] transition-colors flex items-center gap-2">
+                <button onClick={openAddForm}
+                  className="font-['Inter'] text-xs tracking-widest uppercase bg-[#e8e4de] text-[#0e0e0e] px-5 py-2.5 hover:bg-[#c8b89a] transition-colors flex items-center gap-2">
                   <Plus size={13} /> Add Product
                 </button>
               </div>
+
+              {/* Add / Edit form */}
+              {showAddForm && (
+                <div className="bg-[#161616] border border-white/[0.08] p-6 mb-6">
+                  <div className="flex items-center justify-between mb-5">
+                    <h2 className="font-['Inter'] text-xs tracking-widest uppercase text-[#e8e4de]/40">
+                      {editingProduct ? "Edit Product" : "New Product"}
+                    </h2>
+                    <button onClick={() => setShowAddForm(false)} className="text-[#e8e4de]/20 hover:text-[#e8e4de]/60 transition-colors">
+                      <X size={16} />
+                    </button>
+                  </div>
+                  <form onSubmit={handleFormSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    {[
+                      { field: "name", label: "Product Name", required: true },
+                      { field: "price", label: "Price ($)", required: true },
+                      { field: "stock", label: "Initial Stock", required: true },
+                      { field: "image", label: "Image URL or /images/filename.png", required: false },
+                      { field: "sizes", label: 'Sizes (comma-separated, e.g. "S, M, L")', required: true },
+                      { field: "colors", label: 'Colors (Name:hex, e.g. "Black:#0a0a0a, White:#f5f5f5")', required: true },
+                    ].map(({ field, label, required }) => (
+                      <div key={field} className={field === "image" || field === "sizes" || field === "colors" ? "md:col-span-2" : ""}>
+                        <label className="font-['Inter'] text-xs text-[#e8e4de]/30 block mb-1.5">{label}</label>
+                        <input
+                          type="text" required={required}
+                          value={form[field as keyof typeof form] as string}
+                          onChange={(e) => setForm({ ...form, [field]: e.target.value })}
+                          className="w-full border border-white/10 bg-[#1a1a1a] px-3 py-2.5 font-['Inter'] text-sm text-[#e8e4de] focus:outline-none focus:border-[#c8b89a] transition-colors"
+                        />
+                      </div>
+                    ))}
+                    <div className="md:col-span-2">
+                      <label className="font-['Inter'] text-xs text-[#e8e4de]/30 block mb-1.5">Description</label>
+                      <textarea
+                        rows={2} required
+                        value={form.description}
+                        onChange={(e) => setForm({ ...form, description: e.target.value })}
+                        className="w-full border border-white/10 bg-[#1a1a1a] px-3 py-2.5 font-['Inter'] text-sm text-[#e8e4de] focus:outline-none focus:border-[#c8b89a] transition-colors resize-none"
+                      />
+                    </div>
+                    <div className="md:col-span-2">
+                      <label className="font-['Inter'] text-xs text-[#e8e4de]/30 block mb-1.5">Material</label>
+                      <input
+                        type="text"
+                        value={form.material}
+                        onChange={(e) => setForm({ ...form, material: e.target.value })}
+                        className="w-full border border-white/10 bg-[#1a1a1a] px-3 py-2.5 font-['Inter'] text-sm text-[#e8e4de] focus:outline-none focus:border-[#c8b89a] transition-colors"
+                      />
+                    </div>
+                    <div className="md:col-span-2 flex items-center gap-3">
+                      <label className="flex items-center gap-2 cursor-pointer">
+                        <input type="checkbox" checked={form.published}
+                          onChange={(e) => setForm({ ...form, published: e.target.checked })}
+                          className="w-4 h-4 accent-[#c8b89a]" />
+                        <span className="font-['Inter'] text-xs text-[#e8e4de]/40 tracking-wide">Publish immediately</span>
+                      </label>
+                    </div>
+                    <div className="md:col-span-2 flex gap-3 pt-2">
+                      <button type="submit"
+                        className="px-6 py-2.5 bg-[#e8e4de] text-[#0e0e0e] font-['Inter'] text-xs tracking-widest uppercase hover:bg-[#c8b89a] transition-colors">
+                        {editingProduct ? "Save Changes" : "Add Product"}
+                      </button>
+                      <button type="button" onClick={() => setShowAddForm(false)}
+                        className="px-6 py-2.5 border border-white/10 text-[#e8e4de]/40 font-['Inter'] text-xs tracking-widest uppercase hover:border-white/20 transition-colors">
+                        Cancel
+                      </button>
+                    </div>
+                  </form>
+                </div>
+              )}
+
               <div className="bg-[#161616] border border-white/[0.06]">
+                {mergedProducts.length === 0 && (
+                  <div className="px-5 py-10 text-center">
+                    <p className="font-['Inter'] text-sm text-[#e8e4de]/25">No products yet. Add one above.</p>
+                  </div>
+                )}
                 {mergedProducts.map((p) => (
                   <div key={p.id} className="flex items-center gap-4 px-5 py-4 border-b border-white/[0.04] last:border-0">
                     <div className="w-14 h-16 bg-[#1a1a1a] shrink-0 overflow-hidden">
-                      <img src={p.images[0]} alt={p.name} className="w-full h-full object-cover" />
+                      <img src={p.images[0]} alt={p.name} className="w-full h-full object-contain p-1" />
                     </div>
                     <div className="flex-1 min-w-0">
-                      <p className="font-['Playfair_Display'] text-sm font-medium text-[#e8e4de]">{p.name}</p>
+                      <p className="font-['Inter'] text-sm font-medium text-[#e8e4de]">{p.name}</p>
                       <p className="font-['Inter'] text-xs text-[#e8e4de]/25 mt-0.5">
                         {COLLECTIONS.find((c) => c.id === p.collectionId)?.name}
                       </p>
                     </div>
                     <StockBadge stock={p.stock} />
                     <p className="font-['Inter'] text-sm text-[#e8e4de] w-16 text-right shrink-0">{formatPrice(p.price)}</p>
-                    <button onClick={() => togglePublish(p.id)}
+                    <button onClick={() => onTogglePublish(p.id)}
                       className={`font-['Inter'] text-[10px] tracking-wide px-2.5 py-1 transition-colors w-16 text-center ${
                         p.published ? "bg-green-500/10 text-green-400" : "bg-white/5 text-[#e8e4de]/30"
                       }`}>
                       {p.published ? "Live" : "Hidden"}
                     </button>
                     <div className="flex items-center gap-1.5 shrink-0">
-                      <button className="p-1.5 hover:bg-white/5 transition-colors text-[#e8e4de]/25 hover:text-[#e8e4de]/70">
+                      <button onClick={() => openEditForm(p)} className="p-1.5 hover:bg-white/5 transition-colors text-[#e8e4de]/25 hover:text-[#e8e4de]/70">
                         <Edit2 size={13} />
                       </button>
-                      <button className="p-1.5 hover:bg-red-500/10 transition-colors text-[#e8e4de]/25 hover:text-red-400">
+                      <button onClick={() => onDeleteProduct(p.id)} className="p-1.5 hover:bg-red-500/10 transition-colors text-[#e8e4de]/25 hover:text-red-400">
                         <Trash2 size={13} />
                       </button>
                     </div>
@@ -1241,13 +1525,19 @@ export default function App() {
   const [searchOpen, setSearchOpen] = useState(false);
   const [quickAddProduct, setQuickAddProduct] = useState<Product | null>(null);
 
+  // ── Auth ──
+  const [adminUser, setAdminUser] = useState<string | null>(null);
+
+  // ── Product state (fully managed) ──
+  const [products, setProducts] = useState<Product[]>(INITIAL_PRODUCTS);
+
   // Lifted stock map — single source of truth across storefront + admin
   const [stockMap, setStockMap] = useState<Record<string, number>>(
-    () => Object.fromEntries(PRODUCTS.map((p) => [p.id, p.stock]))
+    () => Object.fromEntries(INITIAL_PRODUCTS.map((p) => [p.id, p.stock]))
   );
 
   // Enrich products with live stock
-  const liveProducts = PRODUCTS.map((p) => ({ ...p, stock: stockMap[p.id] ?? p.stock }));
+  const liveProducts = products.map((p) => ({ ...p, stock: stockMap[p.id] ?? p.stock }));
 
   // Live selected product (keeps detail page in sync after stock changes)
   const liveSelected = selectedProduct
@@ -1288,8 +1578,39 @@ export default function App() {
   const handleStockChange = (id: string, stock: number) =>
     setStockMap((prev) => ({ ...prev, [id]: stock }));
 
+  // Add or update product
+  const handleAddProduct = (p: Product) => {
+    setProducts((prev) => {
+      const idx = prev.findIndex((x) => x.id === p.id);
+      if (idx >= 0) {
+        const next = [...prev];
+        next[idx] = p;
+        return next;
+      }
+      return [...prev, p];
+    });
+    setStockMap((prev) => ({ ...prev, [p.id]: p.stock }));
+  };
+
+  const handleDeleteProduct = (id: string) => {
+    setProducts((prev) => prev.filter((p) => p.id !== id));
+    setStockMap((prev) => { const next = { ...prev }; delete next[id]; return next; });
+  };
+
+  const handleTogglePublish = (id: string) =>
+    setProducts((prev) => prev.map((p) => p.id === id ? { ...p, published: !p.published } : p));
+
   const cartCount = cart.reduce((s, i) => s + i.quantity, 0);
   const isAdmin = view === "admin";
+
+  // If trying to access admin but not authenticated, show login
+  if (isAdmin && !adminUser) {
+    return (
+      <div className="min-h-screen bg-background text-foreground">
+        <AdminLogin onSuccess={(name) => setAdminUser(name)} />
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-background text-foreground" style={{ fontFamily: "Inter, sans-serif" }}>
@@ -1300,14 +1621,13 @@ export default function App() {
 
       {view === "home" && (
         <HomeView setView={setViewAndScroll} setSelectedProduct={setSelectedProduct}
-          products={liveProducts} collections={COLLECTIONS}
+          products={liveProducts}
           onQuickAdd={(p) => setQuickAddProduct(p)} />
       )}
       {view === "shop" && (
         <ShopView setView={setViewAndScroll} setSelectedProduct={setSelectedProduct}
           products={liveProducts} onQuickAdd={(p) => setQuickAddProduct(p)} />
       )}
-      {view === "collection" && <CollectionView setView={setViewAndScroll} />}
       {view === "product" && liveSelected && (
         <ProductView product={liveSelected} setView={setViewAndScroll} addToCart={addToCart} />
       )}
@@ -1321,8 +1641,17 @@ export default function App() {
         <CheckoutView cart={cart} setView={setViewAndScroll} clearCart={clearCartAndDeductStock} />
       )}
       {view === "confirmation" && <ConfirmationView setView={setViewAndScroll} />}
-      {view === "admin" && (
-        <AdminView products={liveProducts} setView={setViewAndScroll} onStockChange={handleStockChange} />
+      {view === "admin" && adminUser && (
+        <AdminView
+          products={liveProducts}
+          setView={setViewAndScroll}
+          onStockChange={handleStockChange}
+          onAddProduct={handleAddProduct}
+          onDeleteProduct={handleDeleteProduct}
+          onTogglePublish={handleTogglePublish}
+          adminName={adminUser}
+          onLogout={() => { setAdminUser(null); setViewAndScroll("home"); }}
+        />
       )}
 
       {!isAdmin && (
