@@ -532,25 +532,22 @@ function HomeView({ setView, setSelectedProduct, products, onQuickAdd }: {
         >
           SS 2026
         </p>
-      </section>
 
-      {/* ── Marquee / Ticker ── */}
-      <div className="bg-[#c8b89a] overflow-hidden py-2.5 select-none">
-        <div
-          className="flex whitespace-nowrap"
-          style={{
-            animation: "marquee 28s linear infinite",
-          }}
-        >
-          {/* Duplicate text so the scroll is seamless */}
-          <span className="font-['Inter'] text-[11px] tracking-[0.25em] uppercase text-[#0e0e0e] font-semibold px-8">
-            {marqueeText}{marqueeText}
-          </span>
-          <span className="font-['Inter'] text-[11px] tracking-[0.25em] uppercase text-[#0e0e0e] font-semibold px-8">
-            {marqueeText}{marqueeText}
-          </span>
+        {/* Marquee pinned to the bottom of the hero, covering the subtitle */}
+        <div className="absolute bottom-0 left-0 right-0 bg-[#c8b89a] overflow-hidden py-2.5 select-none z-20">
+          <div
+            className="flex whitespace-nowrap"
+            style={{ animation: "marquee 28s linear infinite" }}
+          >
+            <span className="font-['Inter'] text-[11px] tracking-[0.25em] uppercase text-[#0e0e0e] font-semibold px-8">
+              {marqueeText}{marqueeText}
+            </span>
+            <span className="font-['Inter'] text-[11px] tracking-[0.25em] uppercase text-[#0e0e0e] font-semibold px-8">
+              {marqueeText}{marqueeText}
+            </span>
+          </div>
         </div>
-      </div>
+      </section>
 
       {/* ── Shop Layout — sidebar + product grid ── */}
       <ShopLayout
@@ -654,7 +651,7 @@ function ProductView({ product, setView, addToCart }: {
         {/* Details */}
         <div className="md:pt-4">
           {collection && (
-            <p className="font-['Inter'] text-[10px] tracking-[0.3em] uppercase text-[#c8b89a]/70 mb-3">{collection.name}</p>
+            <p className="hidden">{collection.name}</p>
           )}
           <h1 className="font-['Playfair_Display'] text-4xl font-medium text-[#e8e4de] mb-2">{product.name}</h1>
           <p className="font-['Inter'] text-2xl text-[#e8e4de]/70 mb-8">{formatPrice(product.price)}</p>
