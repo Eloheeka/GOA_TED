@@ -78,6 +78,7 @@ const INITIAL_PRODUCTS: Product[] = [
       "/images/GOA BABY TEE black png.png",
       "/images/baby_tee_black.JPG",
       "/images/GOA BABY TEE black png.png",
+      "/images/GOA BABY TEE(1).jpeg",
     ],
     isNew: true,
     published: true,
@@ -113,6 +114,7 @@ const INITIAL_PRODUCTS: Product[] = [
     images: [
       "/images/GOA GUA B.LS.png",
       "/images/bls.jpg",
+      "/images/GOA GUA BLS(2).jpeg",
     ],
     published: true,
   },
@@ -128,8 +130,8 @@ const INITIAL_PRODUCTS: Product[] = [
     stock: 20,
     images: [
       "/images/GOA GUA H.png",
-      "/images/GUA_h (1).jpg",
       "/images/GUA_h1.JPG",
+      "/images/GOA GUA H_1.jpeg",
     ],
     isNew: true,
     published: true,
@@ -162,7 +164,6 @@ const INITIAL_PRODUCTS: Product[] = [
     sizes: ["XS", "S", "M", "L", "XL", "XXL"],
     stock: 12,
     images: [
-      "/images/GOA.PFYH TEE png.png",
       "/images/GOA.PFYH TEE1.png",
       "/images/today.png",
       "/images/pfyh.jpg",
