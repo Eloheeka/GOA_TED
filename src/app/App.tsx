@@ -112,7 +112,6 @@ const INITIAL_PRODUCTS: Product[] = [
     images: [
       "/images/GOA GUA B.LS.png",
       "/images/bls.jpg",
-      "/images/bls2.jpg",
     ],
     published: true,
   },
@@ -145,7 +144,7 @@ const INITIAL_PRODUCTS: Product[] = [
     sizes: ["S", "M", "L", "XL"],
     stock: 16,
     images: [
-      "/images/GOA GUA LS.png",
+      "/images/GOA GUA LS1.png",
       "/images/ls.jpg",
       "/images/ls1.jpg",
     ],
@@ -200,6 +199,7 @@ const INITIAL_PRODUCTS: Product[] = [
       "/images/STRIPED TEE.png",
       "/images/stripped_tee.JPG",
       "/images/stripped_tee1.JPG",
+      "/images/bls2.jpg",
     ],
     isNew: true,
     published: true,
