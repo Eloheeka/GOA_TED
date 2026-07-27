@@ -700,6 +700,22 @@ function ProductView({ product, setView, addToCart }: {
             )}
           </div>
 
+          {/* Product Description & Details */}
+          <div className="mt-8 pt-8 border-t border-white/[0.08] space-y-5">
+            {product.description && (
+              <div>
+                <p className="font-['Inter'] text-xs tracking-widest uppercase text-[#e8e4de]/30 mb-2">Description</p>
+                <p className="font-['Inter'] text-sm text-[#e8e4de]/70 leading-relaxed font-light">{product.description}</p>
+              </div>
+            )}
+            {product.material && (
+              <div>
+                <p className="font-['Inter'] text-xs tracking-widest uppercase text-[#e8e4de]/30 mb-2">Details & Materials</p>
+                <p className="font-['Inter'] text-sm text-[#e8e4de]/70 leading-relaxed font-light">{product.material}</p>
+              </div>
+            )}
+          </div>
+
         </div>
       </div>
     </div>
