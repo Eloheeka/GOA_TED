@@ -290,17 +290,17 @@ function Nav({ setView, cartCount, searchOpen, setSearchOpen }: {
   const [searchVal, setSearchVal] = useState("");
   return (
     <header className="fixed top-0 left-0 right-0 z-50 bg-[#0e0e0e]/95 backdrop-blur-sm border-b border-white/[0.06]">
-      <nav className="max-w-[1400px] mx-auto px-8 h-16 flex items-center justify-between">
+      <nav className="max-w-[1400px] mx-auto px-4 sm:px-8 h-14 sm:h-16 flex items-center justify-between">
         <button onClick={() => setView("home")}
-          className="font-['Playfair_Display'] text-xl font-semibold tracking-[0.18em] uppercase text-[#e8e4de] hover:text-[#c8b89a] transition-colors">
+          className="font-['Playfair_Display'] text-lg sm:text-xl font-semibold tracking-[0.18em] uppercase text-[#e8e4de] hover:text-[#c8b89a] transition-colors">
           GOATED
         </button>
-        <div className="flex items-center gap-5">
+        <div className="flex items-center gap-4 sm:gap-5">
           {searchOpen ? (
             <div className="flex items-center gap-2 border-b border-white/20 pb-0.5">
               <input autoFocus value={searchVal} onChange={(e) => setSearchVal(e.target.value)}
                 placeholder="Search…"
-                className="text-sm w-36 outline-none bg-transparent font-['Inter'] text-[#e8e4de] placeholder:text-white/20" />
+                className="text-sm w-28 sm:w-36 outline-none bg-transparent font-['Inter'] text-[#e8e4de] placeholder:text-white/20" />
               <button onClick={() => { setSearchOpen(false); setSearchVal(""); }} className="text-white/40 hover:text-white/80 transition-colors">
                 <X size={14} />
               </button>
@@ -385,8 +385,8 @@ function ShopLayout({ products, setView, setSelectedProduct, onQuickAdd }: {
 
   return (
     <section className="bg-[#0e0e0e] min-h-screen">
-      <div className="max-w-[1400px] mx-auto px-10 py-12">
-        <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 gap-x-8 gap-y-12">
+      <div className="max-w-[1400px] mx-auto px-4 sm:px-8 md:px-10 py-8 sm:py-12">
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-x-4 gap-y-8 sm:gap-x-8 sm:gap-y-12">
           {published.map((p) => (
             <HomeCatalogCard
               key={p.id}
@@ -470,14 +470,14 @@ function HomeView({ setView, setSelectedProduct, products, onQuickAdd }: {
           src="/videos/rough-draft.mp4"
         />
         {/* Dark overlay */}
-        <div className="absolute inset-0 bg-black/45" />
+        <div className="absolute inset-0 bg-black/50" />
 
         {/* GOATED wordmark */}
         <h1
-          className="relative z-10 text-white select-none leading-none text-center"
+          className="relative z-10 text-white select-none leading-none text-center px-4"
           style={{
             fontFamily: "'Canterbury', serif",
-            fontSize: "clamp(64px, 14vw, 220px)",
+            fontSize: "clamp(52px, 18vw, 220px)",
             fontWeight: "normal",
             letterSpacing: "0.04em",
             textShadow: "0 2px 60px rgba(0,0,0,0.6)",
@@ -488,27 +488,27 @@ function HomeView({ setView, setSelectedProduct, products, onQuickAdd }: {
 
         {/* SS 2026 sub-label */}
         <p
-          className="relative z-10 mt-4 select-none tracking-[0.45em] uppercase"
+          className="relative z-10 mt-3 sm:mt-4 select-none uppercase"
           style={{
             fontFamily: "'Inter', sans-serif",
-            fontSize: "clamp(12px, 2vw, 22px)",
+            fontSize: "clamp(10px, 3vw, 22px)",
             color: "#c8b89a",
-            letterSpacing: "0.45em",
+            letterSpacing: "0.35em",
           }}
         >
           SS 2026
         </p>
 
         {/* Marquee pinned to the bottom of the hero, covering the subtitle */}
-        <div className="absolute bottom-0 left-0 right-0 bg-[#c8b89a] overflow-hidden py-2.5 select-none z-20">
+        <div className="absolute bottom-0 left-0 right-0 bg-[#c8b89a] overflow-hidden py-2 sm:py-2.5 select-none z-20">
           <div
             className="flex whitespace-nowrap"
             style={{ animation: "marquee 28s linear infinite" }}
           >
-            <span className="font-['Inter'] text-[11px] tracking-[0.25em] uppercase text-[#0e0e0e] font-semibold px-8">
+            <span className="font-['Inter'] text-[10px] sm:text-[11px] tracking-[0.2em] sm:tracking-[0.25em] uppercase text-[#0e0e0e] font-semibold px-6 sm:px-8">
               {marqueeText}{marqueeText}
             </span>
-            <span className="font-['Inter'] text-[11px] tracking-[0.25em] uppercase text-[#0e0e0e] font-semibold px-8">
+            <span className="font-['Inter'] text-[10px] sm:text-[11px] tracking-[0.2em] sm:tracking-[0.25em] uppercase text-[#0e0e0e] font-semibold px-6 sm:px-8">
               {marqueeText}{marqueeText}
             </span>
           </div>
@@ -535,12 +535,12 @@ function ShopView({ setView, setSelectedProduct, products, onQuickAdd }: {
   products: Product[]; onQuickAdd: (p: Product) => void;
 }) {
   return (
-    <div className="max-w-[1400px] mx-auto px-8 pt-32 pb-24">
-      <div className="mb-12">
+    <div className="max-w-[1400px] mx-auto px-4 sm:px-8 pt-24 sm:pt-32 pb-16 sm:pb-24">
+      <div className="mb-8 sm:mb-12">
         <p className="font-['Inter'] text-xs tracking-[0.3em] uppercase text-[#e8e4de]/25 mb-2">Browse</p>
-        <h1 className="font-['Playfair_Display'] text-4xl font-medium text-[#e8e4de]">All Products</h1>
+        <h1 className="font-['Playfair_Display'] text-2xl sm:text-4xl font-medium text-[#e8e4de]">All Products</h1>
       </div>
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 md:gap-8">
+      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6 md:gap-8">
         {products.map((p) => (
           <ProductCard key={p.id} product={p}
             onSelect={() => { setSelectedProduct(p); setView("product"); }}
@@ -569,12 +569,12 @@ function ProductView({ product, setView, addToCart }: {
   };
 
   return (
-    <div className="max-w-[1400px] mx-auto px-8 pt-28 pb-24">
+    <div className="max-w-[1400px] mx-auto px-4 sm:px-8 pt-20 sm:pt-28 pb-16 sm:pb-24">
       <button onClick={() => setView("shop")}
-        className="font-['Inter'] text-xs tracking-widest uppercase text-[#e8e4de]/30 hover:text-[#e8e4de] transition-colors flex items-center gap-2 mb-10">
+        className="font-['Inter'] text-xs tracking-widest uppercase text-[#e8e4de]/30 hover:text-[#e8e4de] transition-colors flex items-center gap-2 mb-8 sm:mb-10">
         <ChevronLeft size={12} /> Back
       </button>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-12 lg:gap-20">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 sm:gap-12 lg:gap-20">
         {/* Images */}
         <div className="space-y-3">
           <div className="aspect-[4/5] bg-[#1a1a1a] overflow-hidden">
@@ -598,8 +598,8 @@ function ProductView({ product, setView, addToCart }: {
           {collection && (
             <p className="hidden">{collection.name}</p>
           )}
-          <h1 className="font-['Playfair_Display'] text-4xl font-medium text-[#e8e4de] mb-2">{product.name}</h1>
-          <p className="font-['Inter'] text-2xl text-[#e8e4de]/70 mb-8">{formatPrice(product.price)}</p>
+          <h1 className="font-['Playfair_Display'] text-2xl sm:text-4xl font-medium text-[#e8e4de] mb-2">{product.name}</h1>
+          <p className="font-['Inter'] text-xl sm:text-2xl text-[#e8e4de]/70 mb-6 sm:mb-8">{formatPrice(product.price)}</p>
 
           {/* Color */}
           <div className="mb-6">
@@ -699,8 +699,8 @@ function CartView({ cart, setView, updateQty, removeItem }: {
   );
 
   return (
-    <div className="max-w-[900px] mx-auto px-8 pt-32 pb-24">
-      <h1 className="font-['Playfair_Display'] text-3xl font-medium text-[#e8e4de] mb-12">Your Bag</h1>
+    <div className="max-w-[900px] mx-auto px-4 sm:px-8 pt-24 sm:pt-32 pb-16 sm:pb-24">
+      <h1 className="font-['Playfair_Display'] text-2xl sm:text-3xl font-medium text-[#e8e4de] mb-8 sm:mb-12">Your Bag</h1>
       <div className="space-y-6 mb-12">
         {cart.map((item, idx) => (
           <div key={idx} className="flex gap-5 pb-6 border-b border-white/[0.06]">
@@ -1397,7 +1397,7 @@ function AdminView({ products, setView, onStockChange, onAddProduct, onDeletePro
 function Footer() {
   return (
     <footer className="border-t border-white/[0.06] py-6">
-      <div className="max-w-[1400px] mx-auto px-8 flex items-center justify-center gap-6">
+      <div className="max-w-[1400px] mx-auto px-4 sm:px-8 flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-6">
         <p className="font-['Inter'] text-xs text-[#e8e4de]/15">© 2026 GOATED. All rights reserved.</p>
         <a
           href="tel:+250798651963"
