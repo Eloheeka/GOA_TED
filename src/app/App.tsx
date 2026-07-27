@@ -162,6 +162,8 @@ const INITIAL_PRODUCTS: Product[] = [
     stock: 12,
     images: [
       "/images/GOA.PFYH TEE png.png",
+      "/images/GOA.PFYH TEE1.png",
+      "/images/today.png",
       "/images/pfyh.jpg",
       "/images/pfyh2.jpg",
     ],
@@ -198,7 +200,6 @@ const INITIAL_PRODUCTS: Product[] = [
     images: [
       "/images/STRIPED TEE.png",
       "/images/stripped_tee.JPG",
-      "/images/stripped_tee1.JPG",
       "/images/bls2.jpg",
     ],
     isNew: true,
@@ -846,7 +847,11 @@ function CheckoutView({ cart, setView, clearCart }: {
                   <input type="radio" name="payment" value={pm.id} checked={form.payment === pm.id}
                     onChange={() => setForm({ ...form, payment: pm.id })} className="sr-only" />
                   <span className="font-['Inter'] text-sm text-[#e8e4de]">{pm.label}</span>
-                  {pm.id === "mtn" && <span className="ml-auto font-['Inter'] text-[10px] text-[#e8e4de]/25 tracking-wide">Rwanda</span>}
+                  {pm.id === "mtn" && (
+                    <span className="ml-auto text-right font-['Inter'] text-[10px] tracking-wide text-[#e8e4de]/45">
+                      Rwanda · MoMo code: <strong className="font-medium text-[#c8b89a]">1767475</strong>
+                    </span>
+                  )}
                 </label>
               ))}
             </div>
