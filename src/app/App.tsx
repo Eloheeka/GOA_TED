@@ -218,9 +218,9 @@ const INITIAL_PRODUCTS: Product[] = [
     sizes: ["S", "M", "L", "XL", "XXL"],
     stock: 20,
     images: [
-      "/images/GOA BLK HOODIE.jpeg",
+      "/images/GOA_BLK_HOODIE1.png",
       "/images/GUA_h (1).jpg",
-      "/images/GOA BLK HOODIE.jpeg",
+      "/images/GOA_BLK_HOODIE1.png",
     ],
     isNew: true,
     published: true,
