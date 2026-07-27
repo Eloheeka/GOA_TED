@@ -1400,6 +1400,12 @@ function Footer() {
       <div className="max-w-[1400px] mx-auto px-8 flex items-center justify-center gap-6">
         <p className="font-['Inter'] text-xs text-[#e8e4de]/15">© 2026 GOATED. All rights reserved.</p>
         <a
+          href="tel:+250798651963"
+          className="font-['Inter'] text-xs text-[#e8e4de]/30 hover:text-[#e8e4de] transition-colors"
+        >
+          +250 798 651 963
+        </a>
+        <a
           href="https://www.instagram.com/goa_ted.tm?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw=="
           target="_blank"
           rel="noopener noreferrer"
