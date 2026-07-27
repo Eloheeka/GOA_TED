@@ -201,6 +201,8 @@ const INITIAL_PRODUCTS: Product[] = [
       "/images/STRIPED TEE.png",
       "/images/stripped_tee.JPG",
       "/images/bls2.jpg",
+      "/images/STRIPED TEE1.png",
+      "/images/TEE-1.png",
     ],
     isNew: true,
     published: true,
