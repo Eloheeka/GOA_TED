@@ -160,7 +160,7 @@ const INITIAL_PRODUCTS: Product[] = [
     collectionId: "essentials",
     description: "Printed for your head. Statement tee with bold front graphics from the GOATED archive.",
     material: "100% Cotton, 200gsm.",
-    colors: [{ name: "White", hex: "#f5f5f5" }],
+    colors: [{ name: "Black", hex: "#0a0a0a" }],
     sizes: ["XS", "S", "M", "L", "XL", "XXL"],
     stock: 12,
     images: [
