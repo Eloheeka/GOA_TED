@@ -60,6 +60,7 @@ const CATEGORY_PRODUCTS: { label: string; productId: string }[] = [
   { label: "GOA.PFYH",           productId: "p6" },
   { label: "POLO",               productId: "p7" },
   { label: "STRIPED TEE",        productId: "p8" },
+  { label: "GOA BLK HOODIE",     productId: "p9" },
 ];
 
 const INITIAL_PRODUCTS: Product[] = [
@@ -124,7 +125,7 @@ const INITIAL_PRODUCTS: Product[] = [
     material: "80% Cotton, 20% Polyester, 380gsm.",
     colors: [{ name: "Black", hex: "#0a0a0a" }],
     sizes: ["S", "M", "L", "XL", "XXL"],
-    stock: 10,
+    stock: 20,
     images: [
       "/images/GOA GUA H.png",
       "/images/GUA_h (1).jpg",
@@ -179,7 +180,7 @@ const INITIAL_PRODUCTS: Product[] = [
     material: "100% Piqué Cotton, 220gsm.",
     colors: [{ name: "Black", hex: "#0a0a0a" }],
     sizes: ["S", "M", "L", "XL"],
-    stock: 8,
+    stock: 20,
     images: [
       "/images/POLO.png",
       "/images/polo.jpg",
@@ -198,11 +199,28 @@ const INITIAL_PRODUCTS: Product[] = [
     sizes: ["XS", "S", "M", "L", "XL", "XXL"],
     stock: 22,
     images: [
-      "/images/STRIPED TEE.png",
       "/images/stripped_tee.JPG",
       "/images/bls2.jpg",
       "/images/STRIPED TEE1.png",
       "/images/TEE-1.png",
+    ],
+    isNew: true,
+    published: true,
+  },
+  {
+    id: "p9",
+    name: "GOA BLK HOODIE",
+    price: 30000,
+    collectionId: "essentials",
+    description: "Black zip-up hoodie with a bold GOATED front graphic.",
+    material: "Cotton blend.",
+    colors: [{ name: "Black", hex: "#0a0a0a" }],
+    sizes: ["S", "M", "L", "XL", "XXL"],
+    stock: 20,
+    images: [
+      "/images/GOA BLK HOODIE.jpeg",
+      "/images/GUA_h (1).jpg",
+      "/images/GOA BLK HOODIE.jpeg",
     ],
     isNew: true,
     published: true,
