@@ -18,7 +18,7 @@ interface Product {
   colors: { name: string; hex: string }[];
   sizes: string[];
   stock: number;
-  images: [string, string, string];
+  images: string[];
   isNew?: boolean;
   published: boolean;
 }
@@ -77,7 +77,6 @@ const INITIAL_PRODUCTS: Product[] = [
     images: [
       "/images/GOA BABY TEE black png.png",
       "/images/baby_tee_black.JPG",
-      "/images/GOA BABY TEE black png.png",
       "/images/GOA BABY TEE(1).jpeg",
     ],
     isNew: true,
@@ -94,8 +93,6 @@ const INITIAL_PRODUCTS: Product[] = [
     sizes: ["XS", "S", "M", "L", "XL"],
     stock: 18,
     images: [
-      "/images/GOA BABY TEE WHITE PNG.png",
-      "/images/GOA BABY TEE WHITE PNG.png",
       "/images/GOA BABY TEE WHITE PNG.png",
     ],
     isNew: true,
@@ -200,10 +197,10 @@ const INITIAL_PRODUCTS: Product[] = [
     sizes: ["XS", "S", "M", "L", "XL", "XXL"],
     stock: 22,
     images: [
-      "/images/stripped_tee.JPG",
-      "/images/bls2.jpg",
       "/images/STRIPED TEE1.png",
       "/images/TEE-1.png",
+      "/images/stripped_tee.JPG",
+      "/images/bls2.jpg",
     ],
     isNew: true,
     published: true,
@@ -221,7 +218,7 @@ const INITIAL_PRODUCTS: Product[] = [
     images: [
       "/images/GOA_BLK_HOODIE1.png",
       "/images/GUA_h (1).jpg",
-      "/images/GOA_BLK_HOODIE1.png",
+      "/images/gael.jpg",
     ],
     isNew: true,
     published: true,
@@ -284,21 +281,25 @@ function ImageCarousel({ images, alt }: { images: string[]; alt: string }) {
           className="absolute inset-0 w-full h-full object-cover transition-opacity duration-500"
           style={{ opacity: i === idx ? 1 : 0 }} />
       ))}
-      <button onClick={(e) => { e.stopPropagation(); prev(); }}
-        className="absolute left-3 top-1/2 -translate-y-1/2 w-8 h-8 bg-black/70 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-200 text-white/80 hover:text-white">
-        <ChevronLeft size={16} />
-      </button>
-      <button onClick={(e) => { e.stopPropagation(); next(); }}
-        className="absolute right-3 top-1/2 -translate-y-1/2 w-8 h-8 bg-black/70 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-200 text-white/80 hover:text-white">
-        <ChevronRight size={16} />
-      </button>
-      <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-1.5">
-        {images.map((_, i) => (
-          <button key={i} onClick={(e) => { e.stopPropagation(); setIdx(i); }}
-            className="w-1.5 h-1.5 rounded-full transition-colors duration-200"
-            style={{ background: i === idx ? "#e8e4de" : "rgba(232,228,222,0.3)" }} />
-        ))}
-      </div>
+      {images.length > 1 && (
+        <>
+          <button onClick={(e) => { e.stopPropagation(); prev(); }}
+            className="absolute left-3 top-1/2 -translate-y-1/2 w-8 h-8 bg-black/70 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-200 text-white/80 hover:text-white">
+            <ChevronLeft size={16} />
+          </button>
+          <button onClick={(e) => { e.stopPropagation(); next(); }}
+            className="absolute right-3 top-1/2 -translate-y-1/2 w-8 h-8 bg-black/70 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-200 text-white/80 hover:text-white">
+            <ChevronRight size={16} />
+          </button>
+          <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-1.5">
+            {images.map((_, i) => (
+              <button key={i} onClick={(e) => { e.stopPropagation(); setIdx(i); }}
+                className="w-1.5 h-1.5 rounded-full transition-colors duration-200"
+                style={{ background: i === idx ? "#e8e4de" : "rgba(232,228,222,0.3)" }} />
+            ))}
+          </div>
+        </>
+      )}
     </div>
   );
 }
@@ -606,16 +607,18 @@ function ProductView({ product, setView, addToCart }: {
             <img src={product.images[mainImg]} alt={product.name}
               className="w-full h-full object-contain p-6 transition-opacity duration-300" />
           </div>
-          <div className="grid grid-cols-3 gap-3">
-            {product.images.map((img, i) => (
-              <button key={i} onClick={() => setMainImg(i)}
-                className={`aspect-[4/5] bg-[#1a1a1a] overflow-hidden border-2 transition-colors ${
-                  mainImg === i ? "border-[#c8b89a]" : "border-transparent opacity-50 hover:opacity-80"
-                }`}>
-                <img src={img} alt={`View ${i + 1}`} className="w-full h-full object-contain p-2" />
-              </button>
-            ))}
-          </div>
+          {product.images.length > 1 && (
+            <div className="grid gap-3" style={{ gridTemplateColumns: `repeat(${product.images.length}, minmax(0, 1fr))` }}>
+              {product.images.map((img, i) => (
+                <button key={i} onClick={() => setMainImg(i)}
+                  className={`aspect-[4/5] bg-[#1a1a1a] overflow-hidden border-2 transition-colors ${
+                    mainImg === i ? "border-[#c8b89a]" : "border-transparent opacity-50 hover:opacity-80"
+                  }`}>
+                  <img src={img} alt={`View ${i + 1}`} className="w-full h-full object-contain p-2" />
+                </button>
+              ))}
+            </div>
+          )}
         </div>
 
         {/* Details */}
