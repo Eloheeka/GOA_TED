@@ -60,7 +60,7 @@ const CATEGORY_PRODUCTS: { label: string; productId: string }[] = [
   { label: "GOA.PFYH",           productId: "p6" },
   { label: "POLO",               productId: "p7" },
   { label: "STRIPED TEE",        productId: "p8" },
-  { label: "GOA BLK HOODIE",     productId: "p9" },
+  { label: "GOA_BLK_HOODIE1",    productId: "p9" },
 ];
 
 const INITIAL_PRODUCTS: Product[] = [
@@ -209,7 +209,7 @@ const INITIAL_PRODUCTS: Product[] = [
   },
   {
     id: "p9",
-    name: "GOA BLK HOODIE",
+    name: "GOA_BLK_HOODIE1",
     price: 30000,
     collectionId: "essentials",
     description: "Black zip-up hoodie with a bold GOATED front graphic.",
