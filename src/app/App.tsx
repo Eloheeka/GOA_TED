@@ -41,6 +41,7 @@ interface CartItem {
 
 const ALLOWED_USERS: { email: string; password: string; name: string }[] = [
   { email: "ishimwesamuel183@gmail.com", password: "goated@2026", name: "Samuel" },
+  { email: "ishimwesamuel83@gmail.com", password: "goated@2026", name: "Samuel" },
 ];
 
 // ── Data ──────────────────────────────────────────────────────────────────────
