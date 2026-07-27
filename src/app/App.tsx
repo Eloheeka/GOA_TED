@@ -380,55 +380,20 @@ function ShopLayout({ products, setView, setSelectedProduct, onQuickAdd }: {
   setSelectedProduct: (p: Product) => void;
   onQuickAdd: (p: Product) => void;
 }) {
-  const [activeId, setActiveId] = useState<string | null>(null);
-
   const published = products.filter((p) => p.published);
-  // When a category is selected, show only that product; otherwise show all
-  const displayed = activeId ? published.filter((p) => p.id === activeId) : published;
 
   return (
     <section className="bg-[#0e0e0e] min-h-screen">
-      <div className="max-w-[1400px] mx-auto flex">
-        {/* Sidebar */}
-        <aside className="w-48 shrink-0 py-12 pr-4 border-r border-white/[0.06] sticky top-16 self-start h-[calc(100vh-4rem)] overflow-y-auto">
-          <button
-            onClick={() => setActiveId(null)}
-            className={`w-full text-left font-['Inter'] text-[11px] tracking-widest uppercase py-1.5 px-3 mb-3 transition-colors ${
-              activeId === null ? "text-[#c8b89a]" : "text-[#e8e4de]/35 hover:text-[#e8e4de]/70"
-            }`}
-          >
-            ALL
-          </button>
-          <div className="h-px bg-white/[0.06] mb-3" />
-          <nav className="flex flex-col gap-0.5">
-            {CATEGORY_PRODUCTS.map((cat) => (
-              <button
-                key={cat.productId}
-                onClick={() => setActiveId(cat.productId)}
-                className={`text-left font-['Inter'] text-[11px] tracking-widest uppercase py-1.5 px-3 transition-colors ${
-                  activeId === cat.productId
-                    ? "text-[#c8b89a]"
-                    : "text-[#e8e4de]/35 hover:text-[#e8e4de]/70"
-                }`}
-              >
-                {cat.label}
-              </button>
-            ))}
-          </nav>
-        </aside>
-
-        {/* Grid */}
-        <div className="flex-1 px-10 py-12">
-          <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 gap-x-8 gap-y-12">
-            {displayed.map((p) => (
-              <HomeCatalogCard
-                key={p.id}
-                product={p}
-                onSelect={() => { setSelectedProduct(p); setView("product"); }}
-                onQuickAdd={() => onQuickAdd(p)}
-              />
-            ))}
-          </div>
+      <div className="max-w-[1400px] mx-auto px-10 py-12">
+        <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 gap-x-8 gap-y-12">
+          {published.map((p) => (
+            <HomeCatalogCard
+              key={p.id}
+              product={p}
+              onSelect={() => { setSelectedProduct(p); setView("product"); }}
+              onQuickAdd={() => onQuickAdd(p)}
+            />
+          ))}
         </div>
       </div>
     </section>
