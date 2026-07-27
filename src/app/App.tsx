@@ -815,7 +815,7 @@ function CartView({ cart, setView, updateQty, removeItem }: {
 function CheckoutView({ cart, setView, clearCart }: {
   cart: CartItem[]; setView: (v: View) => void; clearCart: () => void;
 }) {
-  const [form, setForm] = useState({ name: "", phone: "", email: "", address: "", payment: "visa" });
+  const [form, setForm] = useState({ name: "", phone: "", email: "", address: "", payment: "mtn" });
   const total = cart.reduce((s, i) => s + i.product.price * i.quantity, 0);
   const delivery = 2000;
 
@@ -826,8 +826,6 @@ function CheckoutView({ cart, setView, clearCart }: {
   };
 
   const paymentMethods = [
-    { id: "visa", label: "Visa" },
-    { id: "mastercard", label: "Mastercard" },
     { id: "mtn", label: "MTN Mobile Money" },
   ];
 
