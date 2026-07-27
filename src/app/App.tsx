@@ -719,7 +719,7 @@ function CartView({ cart, setView, updateQty, removeItem }: {
   updateQty: (idx: number, qty: number) => void; removeItem: (idx: number) => void;
 }) {
   const total = cart.reduce((s, i) => s + i.product.price * i.quantity, 0);
-  const delivery = total >= 100 ? 0 : 8;
+  const delivery = 2000;
 
   if (cart.length === 0) return (
     <div className="max-w-[1400px] mx-auto px-8 pt-36 pb-24 text-center">
@@ -807,7 +807,7 @@ function CheckoutView({ cart, setView, clearCart }: {
 }) {
   const [form, setForm] = useState({ name: "", phone: "", email: "", address: "", payment: "visa" });
   const total = cart.reduce((s, i) => s + i.product.price * i.quantity, 0);
-  const delivery = total >= 100 ? 0 : 8;
+  const delivery = 2000;
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
