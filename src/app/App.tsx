@@ -473,27 +473,30 @@ function HomeView({ setView, setSelectedProduct, products, onQuickAdd }: {
         <div className="absolute inset-0 bg-black/50" />
 
         {/* GOATED wordmark */}
-        <h1
-          className="relative z-10 text-white select-none leading-none text-center px-4"
-          style={{
-            fontFamily: "'Canterbury', serif",
-            fontSize: "clamp(52px, 18vw, 220px)",
-            fontWeight: "normal",
-            letterSpacing: "0.04em",
-            textShadow: "0 2px 60px rgba(0,0,0,0.6)",
-          }}
-        >
-          GUATEMALA
-        </h1>
+        <div className="relative z-10 w-full px-[5vw] sm:px-[8vw] flex items-center justify-center">
+          <h1
+            className="text-white select-none leading-none text-center w-full"
+            style={{
+              fontFamily: "'Canterbury', serif",
+              fontSize: "clamp(36px, 14vw, 210px)",
+              fontWeight: "normal",
+              letterSpacing: "0.04em",
+              textShadow: "0 2px 60px rgba(0,0,0,0.6)",
+              whiteSpace: "nowrap",
+            }}
+          >
+            GUATEMALA
+          </h1>
+        </div>
 
         {/* SS 2026 sub-label */}
         <p
-          className="relative z-10 mt-3 sm:mt-4 select-none uppercase"
+          className="relative z-10 mt-3 sm:mt-5 select-none uppercase"
           style={{
             fontFamily: "'Inter', sans-serif",
-            fontSize: "clamp(10px, 3vw, 22px)",
+            fontSize: "clamp(9px, 2.5vw, 20px)",
             color: "#c8b89a",
-            letterSpacing: "0.35em",
+            letterSpacing: "0.4em",
           }}
         >
           SS 2026
