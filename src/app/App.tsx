@@ -60,7 +60,7 @@ const CATEGORY_PRODUCTS: { label: string; productId: string }[] = [
   { label: "GOA.PFYH",           productId: "p6" },
   { label: "POLO",               productId: "p7" },
   { label: "STRIPED TEE",        productId: "p8" },
-  { label: "GOA_BLK_HOODIE1",    productId: "p9" },
+  { label: "GOA BLK HOODIE",     productId: "p9" },
 ];
 
 const INITIAL_PRODUCTS: Product[] = [
@@ -125,7 +125,7 @@ const INITIAL_PRODUCTS: Product[] = [
     collectionId: "essentials",
     description: "Guatemala collection hoodie. Heavyweight construction with a clean front and structured hood.",
     material: "80% Cotton, 20% Polyester, 380gsm.",
-    colors: [{ name: "Black", hex: "#0a0a0a" }],
+    colors: [{ name: "White", hex: "#f5f5f5" }],
     sizes: ["S", "M", "L", "XL", "XXL"],
     stock: 20,
     images: [
@@ -143,7 +143,7 @@ const INITIAL_PRODUCTS: Product[] = [
     collectionId: "essentials",
     description: "Long sleeve tee from the Guatemala series. Minimal, versatile, essential.",
     material: "100% Cotton, 200gsm.",
-    colors: [{ name: "Black", hex: "#0a0a0a" }],
+    colors: [{ name: "White", hex: "#f5f5f5" }],
     sizes: ["S", "M", "L", "XL"],
     stock: 16,
     images: [
@@ -179,7 +179,7 @@ const INITIAL_PRODUCTS: Product[] = [
     collectionId: "essentials",
     description: "Classic polo with a modern GOATED fit. Clean collar, subtle branding, built to last.",
     material: "100% Piqué Cotton, 220gsm.",
-    colors: [{ name: "Black", hex: "#0a0a0a" }],
+    colors: [{ name: "Blue", hex: "#2563eb" }],
     sizes: ["S", "M", "L", "XL"],
     stock: 20,
     images: [
@@ -210,7 +210,7 @@ const INITIAL_PRODUCTS: Product[] = [
   },
   {
     id: "p9",
-    name: "GOA_BLK_HOODIE1",
+    name: "GOA BLK HOODIE",
     price: 30000,
     collectionId: "essentials",
     description: "Black zip-up hoodie with a bold GOATED front graphic.",
